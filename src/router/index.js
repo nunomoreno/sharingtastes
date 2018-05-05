@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+// import Signup from '@/components/Signup.vue'
+//import EventDetail from '@/components/EventDetail.vue'
 
 const routerOptions = [
   { path: '/', component: 'Landing' },
@@ -14,6 +16,8 @@ const routes = routerOptions.map(route => {
         component: () => import(`@/components/${route.component}.vue`)
     }
 })
+
+routes.push({path: '/event/:event_id', component: () => import(`@/components/EventDetail.vue`)})
 
 Vue.use(Router)
 
