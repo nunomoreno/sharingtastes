@@ -1,22 +1,23 @@
 <template>
-  <v-container fluid>
-    <v-layout row wrap>
-      <v-flex xs12 class="text-xs-center" mt-5>
-        <h1>Home page</h1>
-      </v-flex>
-      <v-flex xs12 class="text-xs-center" mt-3>
-        <!--calendar here -->
+  <v-layout justify-space-between wrap>
+    <v-flex xs12 sm6 class="my-3">
+      <div class="subheading">Defined by array</div>
       <v-date-picker
         v-model="date1"
         event-color="green lighten-1"
         :events="arrayEvents"
       ></v-date-picker>
-          
-      </v-flex>
-    </v-layout>
-  </v-container>
+    </v-flex>
+    <v-flex xs12 sm6 class="my-3">
+      <div class="subheading">Defined by function</div>
+      <v-date-picker
+        v-model="date2"
+        :event-color="date => date[9] % 2 ? 'red' : 'yellow'"
+        :events="functionEvents"
+      ></v-date-picker>
+    </v-flex>
+  </v-layout>
 </template>
-
 <script>
   export default {
     data: () => ({
@@ -36,10 +37,9 @@
 
     methods: {
       functionEvents (date) {
-    //    const [,, day] = date.split('-')
-    //    return parseInt(day, 10) % 3 === 0
+        const [,, day] = date.split('-')
+        return parseInt(day, 10) % 3 === 0
       }
     }
 }
-
 </script>
