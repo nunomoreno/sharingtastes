@@ -1,28 +1,49 @@
 <template>
     
-    <v-layout >
-      <v-flex xs12 class="text-xs-center" mt-3>
-        <!--calendar here -->
-      <v-date-picker
-        v-model="date"
-        event-color="green lighten-1"
-        :events="arrayEvents"
-        :picker-date.sync="pickerDate"
-        ref="picker"
-        landscape
-      ></v-date-picker>
-      </v-flex>
+    <div>
+     <v-container fluid text-xs-center>    
+    <v-layout row wrap>
         
-    <v-flex xs12 sm6 class="my-2 px-1">
-      <div class="title">Month news ({{ pickerDate || 'change month...' }})</div>
-      <div class="subheading">Change month to see other news</div>
-      <ul class="ma-3">
+    
+      
+        <v-flex xs12 sm6 class="text-xs-center" mt-3>
+            <!--calendar here -->
+            <v-date-picker
+            v-model="date"
+            event-color="green lighten-1"
+            :events="arrayEvents"
+            :picker-date.sync="pickerDate"
+            ref="picker"
+            no-title="true"
+            width="500px"
+            class="text-s-center"
+        ></v-date-picker>
+        </v-flex>
+        
+        <v-flex xs12 sm6 class="my-2 px-1">
+       
+        <v-card flat="true">
+        <v-card-media src="https://vuetifyjs.com/static/doc-images/cards/desert.jpg" height="200px">
+        </v-card-media>
+        <v-card-title primary-title>
+          <div>
+            <h3 class="headline mb-0">Month news ({{ pickerDate || 'change month...' }})</h3>
+             <ul class="ma-3">
         <li v-for="note in notes" :key="note">{{ note }}</li>
-      </ul>
-    </v-flex>
+        </ul>
+          </div>
+        </v-card-title>
+        <v-card-actions>
+          <v-btn flat color="orange">Share</v-btn>
+          <v-btn flat color="orange">Explore</v-btn>
+        </v-card-actions>
+      </v-card>
+        </v-flex>
+
         
-        
-    </v-layout>
+    </v-layout>    
+    </v-container>    
+  </div>  
 </template>
 
 <script>
@@ -69,3 +90,16 @@
 }
 
 </script>
+
+
+<style lang="css">
+    .picker__body{
+        height: 400px;
+    }
+    .date-picker-table td, .date-picker-table th {
+    height: 50px;
+    }
+    .theme--light .date-picker-table .btn {
+    font-size: 20px;
+    }   
+</style>
