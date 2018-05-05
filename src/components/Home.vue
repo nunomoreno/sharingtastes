@@ -1,28 +1,45 @@
 <template>
-  <v-container fluid>
-    <v-layout row wrap>
-      <v-flex xs12 class="text-xs-center" mt-5>
-        <h1>Home page</h1>
-      </v-flex>
+    
+    <v-layout >
       <v-flex xs12 class="text-xs-center" mt-3>
         <!--calendar here -->
       <v-date-picker
-        v-model="date1"
+        v-model="date"
         event-color="green lighten-1"
         :events="arrayEvents"
+        :picker-date.sync="pickerDate"
+        ref="picker"
+        landscape
       ></v-date-picker>
-          
       </v-flex>
+        
+    <v-flex xs12 sm6 class="my-2 px-1">
+      <div class="title">Month news ({{ pickerDate || 'change month...' }})</div>
+      <div class="subheading">Change month to see other news</div>
+      <ul class="ma-3">
+        <li v-for="note in notes" :key="note">{{ note }}</li>
+      </ul>
+    </v-flex>
+        
+        
     </v-layout>
-  </v-container>
 </template>
 
 <script>
+
   export default {
     data: () => ({
       arrayEvents: null,
-      date1: null,
-      date2: null
+      date: null,
+         notes: [],
+        pickerDate: null,
+        allNotes: [
+        'President met with prime minister',
+        'New power plant opened',
+        'Rocket launch announced',
+        'Global warming discussion cancelled',
+        'Company changed its location'
+        ]
     }),
 
     mounted () {
@@ -39,7 +56,16 @@
     //    const [,, day] = date.split('-')
     //    return parseInt(day, 10) % 3 === 0
       }
+    },
+    watch: {
+    pickerDate (val) {
+      this.notes = [
+        this.allNotes[Math.floor(Math.random() * 5)],
+        this.allNotes[Math.floor(Math.random() * 5)],
+        this.allNotes[Math.floor(Math.random() * 5)]
+      ].filter((value, index, self) => self.indexOf(value) === index)
     }
+  }
 }
 
 </script>
