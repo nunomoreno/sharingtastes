@@ -24,10 +24,12 @@
        
         <v-card flat="true">
         <v-card-media src="https://vuetifyjs.com/static/doc-images/cards/desert.jpg" height="200px">
+          <p class="date-above-image"><span style="background-color: rgba(0, 0, 0, 0.0)">{{ (date===null)?"":date.substr(8,2)}}</span></p>
         </v-card-media>
         <v-card-title primary-title>
           <div>
-            <h3 class="headline mb-0">Month news ({{ pickerDate || 'change month...' }})</h3>
+            <h3 class="headline mb-0">
+              {{ pickerDate }}</h3>
              <ul class="ma-3">
         <li v-for="note in notes" :key="note">{{ note }}</li>
         </ul>
@@ -39,7 +41,6 @@
         </v-card-actions>
       </v-card>
         </v-flex>
-
         
     </v-layout>    
     </v-container>    
@@ -50,9 +51,9 @@
 
   export default {
     data: () => ({
-      arrayEvents: null,
-      date: null,
-         notes: [],
+        arrayEvents: null,
+        date: null,
+        notes: [],
         pickerDate: null,
         allNotes: [
         'President met with prime minister',
@@ -73,18 +74,20 @@
     },
 
     methods: {
-      functionEvents (date) {
-    //    const [,, day] = date.split('-')
-    //    return parseInt(day, 10) % 3 === 0
+      input: function (date) {
+          console.log("test")
+    
       }
     },
     watch: {
+     
     pickerDate (val) {
       this.notes = [
         this.allNotes[Math.floor(Math.random() * 5)],
         this.allNotes[Math.floor(Math.random() * 5)],
         this.allNotes[Math.floor(Math.random() * 5)]
       ].filter((value, index, self) => self.indexOf(value) === index)
+        
     }
   }
 }
@@ -94,23 +97,35 @@
 
 <style lang="css">
     .picker__body{
-        height: 400px;
+      height: 400px;
     }
     .date-picker-table td, .date-picker-table th {
-    height: 50px;
+      height: 50px;
     }
     .theme--light .date-picker-table .btn {
-    font-size: 20px;
+      font-size: 20px;
+      font-weight: 100; /* ?melhor? */
     }
     .card__title {
-        background-color: coral;
-       
+      background-color: coral;  /* ??  terá de ser a cor desse evento ?? */
     }
     .card__actions {
-        background-color: coral;
+      background-color: coral;  /* ??  terá de ser a cor desse evento ?? */
     }
-     .card__title {
-        color: white;
-       
+    .card__title {
+      color: white;
+    }
+    .date-above-image {
+      color: #ffffff; /* DimGray */
+      position: relative;
+        text-align: right;
+      top: -30%;
+      font-size: 200px;
+      font-family: 'Montserrat', sans-serif;
+      @import url('https://fonts.googleapis.com/css?family=Montserrat:100');
+      font-weight: 800;
+    }
+    .headline mb-0 {
+
     }
 </style>
