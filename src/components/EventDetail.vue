@@ -15,12 +15,9 @@ export default {
     data () {
         var this_event_id = this.$route.params.event_id;
         return {
-            event: this.$store.state.events[this.$route.params.event_id],
-            //items:this.$store.state.items,
+            event: this.$store.state.events[this_event_id],
             items: this.$store.state.items.filter(function (el) {
                 return (el.event_id == this_event_id);
-                
-                
             })
         }
     } 
