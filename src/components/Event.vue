@@ -1,29 +1,32 @@
 <template>
   <div id="app">
-    <h1> {{ name }} </h1>
-    <h3>New item</h3>
+    <h1> {{ title }} </h1>
+    <h3>New Event</h3>
     <form v-on:submit.prevent="onSubmit">
       <div>
-        <input name="name" type="text" placeholder="name" v-model="item.name" />
+        <input name="title" type="text" placeholder="title" v-model="event.title" />
       </div>
-      
       <div>
-        <input name="description" type="text" placeholder="description" v-model="item.description" />
+        <input name="date" type="text" placeholder="date" v-model="event.date" />
+      </div>
+      <div>
+        <input name="description" type="text" placeholder="description" v-model="event.description" />
       </div>
      
       <button v-if="updating">Update</button>
       <button v-else>Add</button>
     </form>
-    <h3>All items</h3>
+    <h3>All Events</h3>
     <table>
       <tr>
-        <th>Name</th>
+        <th>Title</th>
+        <th>Date</th>
         <th>Description</th>
         <td>Update</td>
         <td>Delete</td>
       </tr>
-      <tr v-for="(b, index) in items" :key="b.name">
-        <td>{{ b.name }}</td>
+      <tr v-for="(b, index) in events" :key="b.title">
+        <td><a :href="/event/ + b.title">{{ b.title }}</a></td>
         <td>{{ b.date }}</td>
         <td>{{ b.description }}</td>
         <td v-on:click.prevent="onEdit(index)"><a>✎</a></td>
@@ -39,14 +42,14 @@ export default {
   name: 'app',
   data () {
     return {
-      event_id: this.$route.params.event_id,
-      name: 'Item Manager',
+      title: 'My Events Manager',
       updating: false,
       updateIndex: 0,
-      items: [],
-      item: {
-        name: '',
-        event_id: this.event_id
+      events: [],
+      event: {
+        title: '',
+        date: '',
+        description: '',
       }
     }
   },
@@ -55,7 +58,7 @@ export default {
     .then(res => res.json())
     .then(res => {
       this.events = res.events;
-      this.items = res.items.filter(item => item.event_id == this.event_id);
+      this.items = res.items;
     })
   },
   methods: {
@@ -64,8 +67,7 @@ export default {
           this.onUpdate();
           return;
         }
-        this.item.event_id = this.event_id;
-        this.items.push(this.item);
+        this.events.push(this.event);
         var myHeaders = new Headers();
         myHeaders.append('Content-Type', 'application/json'); 
         fetch('https://api.myjson.com/bins/vfcea', {
@@ -75,8 +77,9 @@ export default {
             }).then((res) => res.json())
             .then((data) =>  console.log(data))
             .catch((err)=>console.log(err))
-        this.item = {
-          name: '',
+        
+        this.event = {
+          title: '',
           date: '',
           description: '',
           
@@ -85,14 +88,14 @@ export default {
       onEdit(index) {
        this.updating = true;
        this.updateIndex = index;
-       this.item = this.items[index];
+       this.event = this.events[index];
      },
      onUpdate() {
    this.updating = false;
-   this.items[this.updateIndex] = this.item;
-   this.item = {
-     name: '',
-     event_id: this.event_id,
+   this.events[this.updateIndex] = this.event;
+   this.event = {
+     title: '',
+     date: '',
      description: '',
      
    }
@@ -100,7 +103,7 @@ export default {
  onDelete(index) {
  // Remove one item starting at
  // the specified index
- this.items.splice(index, 1)
+ this.events.splice(index, 1)
 }
   }
 }
