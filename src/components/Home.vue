@@ -29,15 +29,16 @@
         <v-card-title primary-title>
           <div>
             <h3 class="headline mb-0">
-              {{ pickerDate }}</h3>
+              </h3>
              <ul class="ma-3">
         <li v-for="note in notes" :key="note">{{ note }}</li>
         </ul>
           </div>
         </v-card-title>
         <v-card-actions>
-          <v-btn flat color="white">Share</v-btn>
-          <v-btn flat color="white">Explore</v-btn>
+          <div style="visibility:hidden"><v-btn flat color="white">Share</v-btn></div>
+          <div><v-btn flat invisible color="white">Explore</v-btn></div>
+        <div><v-btn flat color="white">Add Event</v-btn></div>
         </v-card-actions>
       </v-card>
         </v-flex>
@@ -54,6 +55,17 @@
         arrayEvents: null,
         date: null,
         notes: [],
+        event: {
+            title: '',
+            date: '',
+            description: '',
+        },
+        items: [],
+        item: {
+            name: '',
+            event_id: this.event_id
+        },
+        events: [],
         pickerDate: null,
         allNotes: [
         'President met with prime minister',
@@ -65,22 +77,44 @@
     }),
 
     mounted () {
-      this.arrayEvents = [...Array(6)].map(() => {
-        const day = Math.floor(Math.random() * 30)
-        const d = new Date()
-        d.setDate(day)
-        return d.toISOString().substr(0, 10)
+        
+        fetch('https://api.myjson.com/bins/vfcea')
+            .then(res => res.json())
+            .then(res => {
+            this.events = res.events;
+            this.items = res.items.filter(item => item.event_id == this.event_id);
+            //alert (this.events[1].date) 
+            var arrayEvents= [];
+            this.events.forEach(function(element){
+                const d = new Date()
+                d.setDate(element.date.substr(8,2))
+                alert(d.toISOString().substr(0, 10))
+                arrayEvents.push(d.toISOString().substr(0, 10))
+                //alert(this.arrayEvents.join)
+            })
+            this.arrayEvents=arrayEvents;
+            
+                
+      //this.arrayEvents = [...Array(6)].map(() => {
+    //    const day = Math.floor(Math.random() * 30)
+      //  const d = new Date()
+    //    d.setDate(day)
+      //  return d.toISOString().substr(0, 10)
       })
     },
 
     methods: {
-      input: function (date) {
-          console.log("test")
+      input () {
+          alert("arr")
     
       }
     },
     watch: {
-     
+    date (val){
+      if (this.events.includes(val)){}
+      } 
+    },
+        
     pickerDate (val) {
       this.notes = [
         this.allNotes[Math.floor(Math.random() * 5)],
@@ -90,7 +124,6 @@
         
     }
   }
-}
 
 </script>
 

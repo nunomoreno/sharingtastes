@@ -51,7 +51,7 @@ export default {
     }
   },
   created(){
-      fetch('https://api.myjson.com/bins/vfcea')
+    fetch('https://api.myjson.com/bins/vfcea')
     .then(res => res.json())
     .then(res => {
       this.events = res.events;
