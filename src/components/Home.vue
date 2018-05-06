@@ -87,7 +87,6 @@
             var arrayEvents= [];
             this.events.forEach(function(element){
                 //const d = new Date()
-                alert(element.date)
                 //d.setDate(element.date.substr(0,10))
                 arrayEvents.push(element.date)
                 //alert(this.arrayEvents.join)
