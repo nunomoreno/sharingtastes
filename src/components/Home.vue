@@ -86,10 +86,10 @@
             //alert (this.events[1].date) 
             var arrayEvents= [];
             this.events.forEach(function(element){
-                const d = new Date()
-                d.setDate(element.date.substr(8,2))
-                alert(d.toISOString().substr(0, 10))
-                arrayEvents.push(d.toISOString().substr(0, 10))
+                //const d = new Date()
+                alert(element.date)
+                //d.setDate(element.date.substr(0,10))
+                arrayEvents.push(element.date)
                 //alert(this.arrayEvents.join)
             })
             this.arrayEvents=arrayEvents;
@@ -111,7 +111,9 @@
     },
     watch: {
     date (val){
-      if (this.events.includes(val)){}
+        this.events.forEach (function(element){
+            if (element.date==val) alert (val + element.date)
+        })
       } 
     },
         
