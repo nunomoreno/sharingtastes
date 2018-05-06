@@ -10,7 +10,7 @@
             <!--calendar here -->
             <v-date-picker
             v-model="date"
-            event-color="green lighten-1"
+            event-color="deep-orange lighten-1"
             :events="arrayEvents"
             :picker-date.sync="pickerDate"
             ref="picker"
@@ -34,8 +34,8 @@
           </div>
         </v-card-title>
         <v-card-actions>
-          <v-btn flat color="orange">Share</v-btn>
-          <v-btn flat color="orange">Explore</v-btn>
+          <v-btn flat color="white">Share</v-btn>
+          <v-btn flat color="white">Explore</v-btn>
         </v-card-actions>
       </v-card>
         </v-flex>
@@ -101,5 +101,16 @@
     }
     .theme--light .date-picker-table .btn {
     font-size: 20px;
-    }   
+    }
+    .card__title {
+        background-color: coral;
+       
+    }
+    .card__actions {
+        background-color: coral;
+    }
+     .card__title {
+        color: white;
+       
+    }
 </style>
